@@ -122,3 +122,73 @@ class Store:
     def persist(self, draft):
         self.db.execute("UPDATE summaries SET payload=? WHERE id=?",
                         (json.dumps(draft), draft["id"]))
+
+    def save_review(self, team_id, summary_id, expected_version, items):
+        with self.transaction():
+            draft = self.summary(team_id, summary_id)
+            if draft["status"] == "approved":
+                raise RuleError("ALREADY_APPROVED")
+            if type(expected_version) is not int or expected_version != draft["version"]:
+                raise RuleError("VERSION_CONFLICT")
+            if not isinstance(items, list) or len(items) > 30:
+                raise RuleError("VALIDATION_ERROR")
+            originals = {item["item_id"]: item for item in draft["original_items"]}
+            seen = set()
+            fields = {"item_id", "origin", "text", "source_sentence_id", "category"}
+            for item in items:
+                if not isinstance(item, dict) or set(item) != fields:
+                    raise RuleError("VALIDATION_ERROR")
+                item_id = item["item_id"]
+                if not isinstance(item_id, str) or not item_id or item_id in seen:
+                    raise RuleError("VALIDATION_ERROR")
+                seen.add(item_id)
+                if (not isinstance(item["text"], str) or not item["text"].strip()
+                        or len(item["text"]) > 2000
+                        or item["category"] not in ("unresolved", "completed", "pending", "unassigned")):
+                    raise RuleError("VALIDATION_ERROR")
+                if item["origin"] == "extracted":
+                    original = originals.get(item_id)
+                    if original is None or any(item[k] != original[k] for k in
+                                               ("text", "source_sentence_id", "origin")):
+                        raise RuleError("INVALID_SOURCE")
+                elif item["origin"] == "technician":
+                    if item_id in originals or item["source_sentence_id"] is not None:
+                        raise RuleError("INVALID_SOURCE")
+                else:
+                    raise RuleError("VALIDATION_ERROR")
+            if items != draft["items"]:
+                draft["items"] = items
+                draft["version"] += 1
+                self.persist(draft)
+        return draft
+
+    def approve(self, team_id, summary_id, expected_version, technician_id,
+                source_review_confirmed=False, completeness_confirmed=False):
+        if (source_review_confirmed is not True or completeness_confirmed is not True
+                or not isinstance(technician_id, str) or not technician_id.strip()):
+            raise RuleError("REVIEW_INCOMPLETE")
+        with self.transaction():
+            draft = self.summary(team_id, summary_id)
+            if type(expected_version) is not int:
+                raise RuleError("VERSION_CONFLICT")
+            if draft["status"] == "approved":
+                approval = draft["approval"]
+                if (approval["request_version"] == expected_version
+                        and approval["approved_by"] == technician_id):
+                    return draft
+                raise RuleError("ALREADY_APPROVED")
+            if expected_version != draft["version"]:
+                raise RuleError("VERSION_CONFLICT")
+            shift = self.shift(team_id, draft["shift_id"])
+            if shift["revision"] != draft["source_revision"]:
+                raise RuleError("SOURCE_CHANGED")
+            if not draft["items"] or any(i["category"] == "unassigned" for i in draft["items"]):
+                raise RuleError("REVIEW_INCOMPLETE")
+            draft["version"] += 1
+            draft["status"] = "approved"
+            draft["approval"] = {"id": uid(), "approved_by": technician_id,
+                                 "approved_at": now(), "approved_version": draft["version"],
+                                 "source_revision": draft["source_revision"],
+                                 "request_version": expected_version}
+            self.persist(draft)
+        return draft
