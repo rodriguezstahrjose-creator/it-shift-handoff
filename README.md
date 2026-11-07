@@ -53,8 +53,15 @@ four-second child-process timeout is not implemented.
 
 Use short-lived feature branches, inspect the diff against the Unit 3 contracts,
 run the tests and demo, then merge into main. Local merge commits preserve the
-two completed increments. No hosted pull request or GitHub Actions run has
-occurred unless separately published and verified.
+two completed increments. Both increments were subsequently published and merged
+through GitHub pull requests:
+
+- [Source-linked summaries, PR #1](https://github.com/rodriguezstahrjose-creator/it-shift-handoff/pull/1)
+- [Technician review and quality checks, PR #2](https://github.com/rodriguezstahrjose-creator/it-shift-handoff/pull/2)
+
+PR #2 passed both push and pull-request checks before merging. The hosted test
+log records 20 passing tests; the demo step also succeeded. Branch protection
+is not configured, so checks run automatically but are not an enforced merge rule.
 
 AI-generated code and tests require human understanding and review. Expected
 results must come from the design requirements, rather than accepting whatever

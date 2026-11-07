@@ -51,10 +51,25 @@ and source attribution; inspect failure and boundary cases; run unit and
 integration tests; document AI assistance; merge only once these checks pass.
 AI assistance does not provide an independent reviewer.
 
-## Local versus hosted status
+## Hosted follow-up on November 7, 2026
 
-These are real local Git branches and merges. They are not GitHub pull requests.
-The GitHub Actions configuration has not executed on GitHub, and no remote branch
-protection exists yet. Repository publication requires GitHub access. The full
+The local commits and feature branches were published to the private repository:
+https://github.com/rodriguezstahrjose-creator/it-shift-handoff
+
+The source-linked summary increment was merged through PR #1:
+https://github.com/rodriguezstahrjose-creator/it-shift-handoff/pull/1
+
+The technician-review increment was merged through PR #2 after both its push and
+pull-request checks passed:
+https://github.com/rodriguezstahrjose-creator/it-shift-handoff/pull/2
+
+The pull-request job completed successfully and its log reports 20 passing tests:
+https://github.com/rodriguezstahrjose-creator/it-shift-handoff/actions/runs/42391276815/job/128459176780
+
+The demo step also succeeded. Non-blocking runner notices reported legacy Node
+action versions being run under Node 24 and an upcoming ubuntu-latest image
+migration. There are no failed checks in that run.
+
+No remote branch protection or independent human review exists yet. The full
 Flask application, authentication, browser interface, hard process timeout, and
 representative quality/performance evaluation remain outside this increment.
