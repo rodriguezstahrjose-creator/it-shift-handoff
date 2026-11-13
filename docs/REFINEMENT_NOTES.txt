@@ -1,0 +1,28 @@
+UNIT 5 REFINEMENT REPORT — EVIDENCE WORKSHEET
+Status: Pending actual external feedback. Not a submission-ready report.
+
+The assignment requires exactly 250 words. Do not claim feedback or changes that
+have not occurred. The current project improvements came from self-testing.
+
+After the other independent student reviews your module, collect:
+
+1. Their name, review date, module/version inspected, and actual comments.
+2. The findings in each relevant area: readability, security, performance,
+   integration, and documentation. Keep the original feedback.
+3. The specific changes you made because of that feedback, including functions,
+   before/after behavior, and commit references.
+4. Two or more concrete technical-debt instances if supported by the evidence:
+   what shortcut exists, how it affects reliability or maintenance, what was
+   fixed now, and what is deferred with an actionable next step.
+5. Tests or manual checks actually performed after each change and their results.
+6. Your separate formal review of the other student's module.
+
+Suggested 250-word allocation (the final prose must total exactly 250 words):
+40 words: project/module and review context.
+90 words: specific findings and resulting changes.
+90 words: concrete debt, impacts, and mitigation/deferred work.
+30 words: verification and next steps.
+
+Return with the genuine comments once received. The final report can then be
+written in a natural student voice using this evidence and checked for exactly
+250 words. This worksheet must not be presented as the required report.

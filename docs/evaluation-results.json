@@ -1,0 +1,742 @@
+{
+  "measured_at_utc": "2026-11-13T20:11:13.323293+00:00",
+  "machine": "arm64",
+  "platform": "macOS-26.5.1-arm64-arm-64bit",
+  "python": "3.12.14",
+  "measure": "Full Flask test-client summary POST, including DB and worker startup; excludes network/browser.",
+  "quality_method": "Exact source-sentence recall against synthetic reference indices fixed before evaluation. Each scenario has three required sentences. Not a real-user study.",
+  "scenarios": [
+    {
+      "id": "dev-01-printer",
+      "split": "development",
+      "requested_sentences": 3,
+      "source_sentences": 4,
+      "selected_indices": [
+        1,
+        2,
+        3
+      ],
+      "captured": 2,
+      "required": 3,
+      "omitted_indices": [
+        0
+      ],
+      "latency_seconds": 0.16266229102620855
+    },
+    {
+      "id": "dev-01-printer",
+      "split": "development",
+      "requested_sentences": 5,
+      "source_sentences": 4,
+      "selected_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "captured": 3,
+      "required": 3,
+      "omitted_indices": [],
+      "latency_seconds": 0.1602477499982342
+    },
+    {
+      "id": "dev-02-login",
+      "split": "development",
+      "requested_sentences": 3,
+      "source_sentences": 4,
+      "selected_indices": [
+        0,
+        2,
+        3
+      ],
+      "captured": 2,
+      "required": 3,
+      "omitted_indices": [
+        1
+      ],
+      "latency_seconds": 0.16378004098078236
+    },
+    {
+      "id": "dev-02-login",
+      "split": "development",
+      "requested_sentences": 5,
+      "source_sentences": 4,
+      "selected_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "captured": 3,
+      "required": 3,
+      "omitted_indices": [],
+      "latency_seconds": 0.15864512498956174
+    },
+    {
+      "id": "dev-03-backup",
+      "split": "development",
+      "requested_sentences": 3,
+      "source_sentences": 5,
+      "selected_indices": [
+        2,
+        3,
+        4
+      ],
+      "captured": 1,
+      "required": 3,
+      "omitted_indices": [
+        0,
+        1
+      ],
+      "latency_seconds": 0.1641655410057865
+    },
+    {
+      "id": "dev-03-backup",
+      "split": "development",
+      "requested_sentences": 5,
+      "source_sentences": 5,
+      "selected_indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "captured": 3,
+      "required": 3,
+      "omitted_indices": [],
+      "latency_seconds": 0.16348991700215265
+    },
+    {
+      "id": "dev-04-router",
+      "split": "development",
+      "requested_sentences": 3,
+      "source_sentences": 5,
+      "selected_indices": [
+        0,
+        1,
+        4
+      ],
+      "captured": 1,
+      "required": 3,
+      "omitted_indices": [
+        2,
+        3
+      ],
+      "latency_seconds": 0.16101758397417143
+    },
+    {
+      "id": "dev-04-router",
+      "split": "development",
+      "requested_sentences": 5,
+      "source_sentences": 5,
+      "selected_indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "captured": 3,
+      "required": 3,
+      "omitted_indices": [],
+      "latency_seconds": 0.1575632500462234
+    },
+    {
+      "id": "dev-05-dns",
+      "split": "development",
+      "requested_sentences": 3,
+      "source_sentences": 4,
+      "selected_indices": [
+        1,
+        2,
+        3
+      ],
+      "captured": 2,
+      "required": 3,
+      "omitted_indices": [
+        0
+      ],
+      "latency_seconds": 0.15907570801209658
+    },
+    {
+      "id": "dev-05-dns",
+      "split": "development",
+      "requested_sentences": 5,
+      "source_sentences": 4,
+      "selected_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "captured": 3,
+      "required": 3,
+      "omitted_indices": [],
+      "latency_seconds": 0.15586774999974295
+    },
+    {
+      "id": "dev-06-storage",
+      "split": "development",
+      "requested_sentences": 3,
+      "source_sentences": 5,
+      "selected_indices": [
+        0,
+        2,
+        4
+      ],
+      "captured": 2,
+      "required": 3,
+      "omitted_indices": [
+        3
+      ],
+      "latency_seconds": 0.1555164169985801
+    },
+    {
+      "id": "dev-06-storage",
+      "split": "development",
+      "requested_sentences": 5,
+      "source_sentences": 5,
+      "selected_indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "captured": 3,
+      "required": 3,
+      "omitted_indices": [],
+      "latency_seconds": 0.15824058395810425
+    },
+    {
+      "id": "dev-07-patch",
+      "split": "development",
+      "requested_sentences": 3,
+      "source_sentences": 4,
+      "selected_indices": [
+        0,
+        2,
+        3
+      ],
+      "captured": 2,
+      "required": 3,
+      "omitted_indices": [
+        1
+      ],
+      "latency_seconds": 0.15658791601890698
+    },
+    {
+      "id": "dev-07-patch",
+      "split": "development",
+      "requested_sentences": 5,
+      "source_sentences": 4,
+      "selected_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "captured": 3,
+      "required": 3,
+      "omitted_indices": [],
+      "latency_seconds": 0.15974449994973838
+    },
+    {
+      "id": "dev-08-wifi",
+      "split": "development",
+      "requested_sentences": 3,
+      "source_sentences": 4,
+      "selected_indices": [
+        0,
+        2,
+        3
+      ],
+      "captured": 2,
+      "required": 3,
+      "omitted_indices": [
+        1
+      ],
+      "latency_seconds": 0.1637208749889396
+    },
+    {
+      "id": "dev-08-wifi",
+      "split": "development",
+      "requested_sentences": 5,
+      "source_sentences": 4,
+      "selected_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "captured": 3,
+      "required": 3,
+      "omitted_indices": [],
+      "latency_seconds": 0.15887158300029114
+    },
+    {
+      "id": "dev-09-monitor",
+      "split": "development",
+      "requested_sentences": 3,
+      "source_sentences": 5,
+      "selected_indices": [
+        0,
+        1,
+        3
+      ],
+      "captured": 2,
+      "required": 3,
+      "omitted_indices": [
+        2
+      ],
+      "latency_seconds": 0.15896170801715925
+    },
+    {
+      "id": "dev-09-monitor",
+      "split": "development",
+      "requested_sentences": 5,
+      "source_sentences": 5,
+      "selected_indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "captured": 3,
+      "required": 3,
+      "omitted_indices": [],
+      "latency_seconds": 0.1601797500043176
+    },
+    {
+      "id": "dev-10-certificate",
+      "split": "development",
+      "requested_sentences": 3,
+      "source_sentences": 4,
+      "selected_indices": [
+        0,
+        2,
+        3
+      ],
+      "captured": 2,
+      "required": 3,
+      "omitted_indices": [
+        1
+      ],
+      "latency_seconds": 0.1610238749999553
+    },
+    {
+      "id": "dev-10-certificate",
+      "split": "development",
+      "requested_sentences": 5,
+      "source_sentences": 4,
+      "selected_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "captured": 3,
+      "required": 3,
+      "omitted_indices": [],
+      "latency_seconds": 0.16690041596302763
+    },
+    {
+      "id": "eval-01-mail",
+      "split": "evaluation",
+      "requested_sentences": 3,
+      "source_sentences": 5,
+      "selected_indices": [
+        0,
+        1,
+        4
+      ],
+      "captured": 2,
+      "required": 3,
+      "omitted_indices": [
+        3
+      ],
+      "latency_seconds": 0.15631354204379022
+    },
+    {
+      "id": "eval-01-mail",
+      "split": "evaluation",
+      "requested_sentences": 5,
+      "source_sentences": 5,
+      "selected_indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "captured": 3,
+      "required": 3,
+      "omitted_indices": [],
+      "latency_seconds": 0.15540566702838987
+    },
+    {
+      "id": "eval-02-vpn",
+      "split": "evaluation",
+      "requested_sentences": 3,
+      "source_sentences": 6,
+      "selected_indices": [
+        0,
+        2,
+        4
+      ],
+      "captured": 2,
+      "required": 3,
+      "omitted_indices": [
+        3
+      ],
+      "latency_seconds": 0.15950970898848027
+    },
+    {
+      "id": "eval-02-vpn",
+      "split": "evaluation",
+      "requested_sentences": 5,
+      "source_sentences": 6,
+      "selected_indices": [
+        0,
+        2,
+        3,
+        4,
+        5
+      ],
+      "captured": 3,
+      "required": 3,
+      "omitted_indices": [],
+      "latency_seconds": 0.15757754200603813
+    },
+    {
+      "id": "eval-03-disk",
+      "split": "evaluation",
+      "requested_sentences": 3,
+      "source_sentences": 5,
+      "selected_indices": [
+        0,
+        3,
+        4
+      ],
+      "captured": 2,
+      "required": 3,
+      "omitted_indices": [
+        2
+      ],
+      "latency_seconds": 0.15794595901388675
+    },
+    {
+      "id": "eval-03-disk",
+      "split": "evaluation",
+      "requested_sentences": 5,
+      "source_sentences": 5,
+      "selected_indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "captured": 3,
+      "required": 3,
+      "omitted_indices": [],
+      "latency_seconds": 0.15575974999228492
+    },
+    {
+      "id": "eval-04-resolved",
+      "split": "evaluation",
+      "requested_sentences": 3,
+      "source_sentences": 4,
+      "selected_indices": [
+        1,
+        2,
+        3
+      ],
+      "captured": 2,
+      "required": 3,
+      "omitted_indices": [
+        0
+      ],
+      "latency_seconds": 0.15702899999450892
+    },
+    {
+      "id": "eval-04-resolved",
+      "split": "evaluation",
+      "requested_sentences": 5,
+      "source_sentences": 4,
+      "selected_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "captured": 3,
+      "required": 3,
+      "omitted_indices": [],
+      "latency_seconds": 0.18468133301939815
+    },
+    {
+      "id": "eval-05-queue",
+      "split": "evaluation",
+      "requested_sentences": 3,
+      "source_sentences": 6,
+      "selected_indices": [
+        0,
+        1,
+        3
+      ],
+      "captured": 2,
+      "required": 3,
+      "omitted_indices": [
+        2
+      ],
+      "latency_seconds": 0.1632743330555968
+    },
+    {
+      "id": "eval-05-queue",
+      "split": "evaluation",
+      "requested_sentences": 5,
+      "source_sentences": 6,
+      "selected_indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "captured": 3,
+      "required": 3,
+      "omitted_indices": [],
+      "latency_seconds": 0.18250654102303088
+    },
+    {
+      "id": "eval-06-split-notes",
+      "split": "evaluation",
+      "requested_sentences": 3,
+      "source_sentences": 5,
+      "selected_indices": [
+        0,
+        2,
+        3
+      ],
+      "captured": 2,
+      "required": 3,
+      "omitted_indices": [
+        1
+      ],
+      "latency_seconds": 0.1939679160132073
+    },
+    {
+      "id": "eval-06-split-notes",
+      "split": "evaluation",
+      "requested_sentences": 5,
+      "source_sentences": 5,
+      "selected_indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "captured": 3,
+      "required": 3,
+      "omitted_indices": [],
+      "latency_seconds": 0.1847207499668002
+    },
+    {
+      "id": "eval-07-maintenance",
+      "split": "evaluation",
+      "requested_sentences": 3,
+      "source_sentences": 5,
+      "selected_indices": [
+        0,
+        3,
+        4
+      ],
+      "captured": 2,
+      "required": 3,
+      "omitted_indices": [
+        2
+      ],
+      "latency_seconds": 0.16640179103706032
+    },
+    {
+      "id": "eval-07-maintenance",
+      "split": "evaluation",
+      "requested_sentences": 5,
+      "source_sentences": 5,
+      "selected_indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "captured": 3,
+      "required": 3,
+      "omitted_indices": [],
+      "latency_seconds": 0.16411700000753626
+    },
+    {
+      "id": "eval-08-multiple-incidents",
+      "split": "evaluation",
+      "requested_sentences": 3,
+      "source_sentences": 6,
+      "selected_indices": [
+        0,
+        3,
+        4
+      ],
+      "captured": 2,
+      "required": 3,
+      "omitted_indices": [
+        1
+      ],
+      "latency_seconds": 0.18714737496338785
+    },
+    {
+      "id": "eval-08-multiple-incidents",
+      "split": "evaluation",
+      "requested_sentences": 5,
+      "source_sentences": 6,
+      "selected_indices": [
+        0,
+        2,
+        3,
+        4,
+        5
+      ],
+      "captured": 2,
+      "required": 3,
+      "omitted_indices": [
+        1
+      ],
+      "latency_seconds": 0.16820449999067932
+    },
+    {
+      "id": "eval-09-isolated-critical",
+      "split": "evaluation",
+      "requested_sentences": 3,
+      "source_sentences": 7,
+      "selected_indices": [
+        0,
+        2,
+        3
+      ],
+      "captured": 0,
+      "required": 3,
+      "omitted_indices": [
+        4,
+        5,
+        6
+      ],
+      "latency_seconds": 0.16354062501341105
+    },
+    {
+      "id": "eval-09-isolated-critical",
+      "split": "evaluation",
+      "requested_sentences": 5,
+      "source_sentences": 7,
+      "selected_indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "captured": 1,
+      "required": 3,
+      "omitted_indices": [
+        5,
+        6
+      ],
+      "latency_seconds": 0.1655101670185104
+    },
+    {
+      "id": "eval-10-longer-handoff",
+      "split": "evaluation",
+      "requested_sentences": 3,
+      "source_sentences": 8,
+      "selected_indices": [
+        0,
+        1,
+        2
+      ],
+      "captured": 0,
+      "required": 3,
+      "omitted_indices": [
+        3,
+        4,
+        5
+      ],
+      "latency_seconds": 0.1592903329874389
+    },
+    {
+      "id": "eval-10-longer-handoff",
+      "split": "evaluation",
+      "requested_sentences": 5,
+      "source_sentences": 8,
+      "selected_indices": [
+        0,
+        1,
+        2,
+        6,
+        7
+      ],
+      "captured": 0,
+      "required": 3,
+      "omitted_indices": [
+        3,
+        4,
+        5
+      ],
+      "latency_seconds": 0.1603237499948591
+    }
+  ],
+  "boundary_latency_seconds": [
+    {
+      "mode": "manual",
+      "characters": 10000,
+      "sentences": 200,
+      "status": 201,
+      "seconds": 0.0026927090366370976
+    },
+    {
+      "mode": "manual",
+      "characters": 10000,
+      "sentences": 200,
+      "status": 201,
+      "seconds": 0.00259462499525398
+    },
+    {
+      "mode": "manual",
+      "characters": 10000,
+      "sentences": 200,
+      "status": 201,
+      "seconds": 0.0027266250108368695
+    },
+    {
+      "mode": "textrank",
+      "characters": 10000,
+      "sentences": 200,
+      "status": 201,
+      "seconds": 0.1765789999626577
+    },
+    {
+      "mode": "textrank",
+      "characters": 10000,
+      "sentences": 200,
+      "status": 201,
+      "seconds": 0.1779652499826625
+    },
+    {
+      "mode": "textrank",
+      "characters": 10000,
+      "sentences": 200,
+      "status": 201,
+      "seconds": 0.17832825001096353
+    }
+  ]
+}
