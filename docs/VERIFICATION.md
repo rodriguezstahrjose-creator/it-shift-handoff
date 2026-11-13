@@ -1,6 +1,6 @@
 # Verification record
 
-Local verification performed November 13, 2026. These are actual local results, not a hosted GitHub Actions run or an external peer review.
+Local verification performed November 13, 2026. Local results are below; the hosted follow-up is recorded at the end. No formal independent source-code review is claimed.
 
 ## Automated checks
 
@@ -8,7 +8,7 @@ Local verification performed November 13, 2026. These are actual local results, 
 - Python statement coverage: 92%, including the application and CLI; separate child-process execution is not counted by this coverage run.
 - Bandit: no medium/high findings; two low-severity subprocess warnings retained and assessed in TECHNICAL_DEBT.md.
 - Python compilation, JavaScript syntax, and Mac launcher shell syntax passed.
-- Linux CI matrix is configured for Python 3.11 and 3.12, but has not yet run on GitHub.
+- Linux CI matrix passed for Python 3.11 and 3.12 on GitHub; see hosted follow-up below.
 
 ## Quality and performance
 
@@ -57,3 +57,7 @@ The full approved workflow screenshot is evidence/approved-workflow.png. Browser
 After reviewing actual replies, added the pull request quality-gate template, critical-action/abbreviation stress fixtures, and two new regression tests covering cross-draft reference transfer and technician recovery of critical actions. All 52 tests pass. The original synthetic quality results were retained rather than retuned. These discussion comments do not constitute a formal source-code peer review.
 
 The original repository was recovered at commit ad1d2809412d83cf32a4dbbdf374c1c82baa6449. Its original 20 tests and demo pass together with 32 web/API tests. This report supersedes the earlier local reconstruction metrics; the shared original cosine TextRank core now produces 16/30 required items at three sentences and 24/30 at five.
+
+## Hosted follow-up
+
+Application commit: `8e51ff04258681a540055108b8e432d68814e6b9`. The original repository history is preserved on `feature/unit5-alpha` and [draft PR #3](https://github.com/rodriguezstahrjose-creator/it-shift-handoff/pull/3). All four checks passed: Python 3.11 and 3.12 for both push and pull-request events. The [pull-request run](https://github.com/rodriguezstahrjose-creator/it-shift-handoff/actions/runs/43500581067) succeeded, as did the [push run](https://github.com/rodriguezstahrjose-creator/it-shift-handoff/actions/runs/43500422557). Each configured job runs all 52 tests, coverage, the original demo, the security gate, and Python syntax checks. Branch protection and an independent reviewer remain unconfigured; successful checks do not imply human review.
