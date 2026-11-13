@@ -33,7 +33,8 @@ These are local synthetic results, not a hosted pipeline run or production claim
 STILL NEEDED BEFORE THE UNIT 5 SUBMISSION
 - Use the feature/unit5-alpha branch in the original repository and confirm
   the Actions jobs pass on its final commit.
-  The final hosted Alpha check results must be verified before submission.
+  Both Python 3.11 and 3.12 hosted jobs passed for the application commit.
+  The review is at https://github.com/rodriguezstahrjose-creator/it-shift-handoff/pull/3
 - Receive the other student's real feedback, implement accepted changes, and
   verify them. Also perform your own formal review of their module.
 - Write the exactly 250-word refinement report from that evidence.

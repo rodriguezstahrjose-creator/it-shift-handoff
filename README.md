@@ -58,7 +58,7 @@ python -m compileall -q handoff scripts tests
 python scripts/evaluate.py --output docs/evaluation-results.json
 ```
 
-Use the virtual environment's Python. `requirements-dev.lock` records all installed runtime and development package versions for this build. `requirements.txt` pins the runtime dependencies. The CI workflow is in `.github/workflows/tests.yml` and uses Python 3.11 and 3.12 on Linux. **Hosted GitHub Actions execution has not been verified.** Local test evidence is included under `docs/evidence/`; this does not replace a successful hosted pipeline run required by Unit 5.
+Use the virtual environment's Python. `requirements-dev.lock` records all installed runtime and development package versions for this build. `requirements.txt` pins the runtime dependencies. The CI workflow is in `.github/workflows/tests.yml` and uses Python 3.11 and 3.12 on Linux. **Hosted checks passed** on application commit `8e51ff04258681a540055108b8e432d68814e6b9`: both Python 3.11 and 3.12 jobs succeeded for push and pull-request events. [Verified pull-request run](https://github.com/rodriguezstahrjose-creator/it-shift-handoff/actions/runs/43500581067). Local test evidence is included under `docs/evidence/`.
 
 The final local verification passed 52 tests with 92% Python coverage. Coverage excludes execution inside the separate worker process, although integration tests invoke the real worker. Static scanning reported two low-severity subprocess warnings, analyzed in `docs/TECHNICAL_DEBT.md`; no medium/high findings were reported.
 
@@ -91,9 +91,9 @@ This is an **Alpha branch of the original project**, not a completed Unit 5 subm
 
 The original `Store` remains an internal compatibility/demo component with its original schema. The web application uses a separate enriched database schema; do not point `Store` at a web database. No legacy data migration is claimed. This transitional duplication is recorded in the technical-debt register.
 
-Work is prepared on `feature/unit5-alpha` in the existing private repository. The original default branch and earlier PRs are preserved. Hosted checks must pass on the final Alpha commit before submission; use the branch/review link in the delivery message. Do not upload runtime databases, installed environments, or credentials.
+Work is prepared on `feature/unit5-alpha` in the existing private repository. The original default branch and earlier PRs are preserved. The Alpha is available in [draft PR #3](https://github.com/rodriguezstahrjose-creator/it-shift-handoff/pull/3). Hosted checks passed on the application commit; verify any later code changes before submission. Do not upload runtime databases, installed environments, or credentials.
 
-The other independent student can review this ZIP without GitHub access. `docs/PEER_REVIEW.md` supplies the walkthrough and feedback form. No external peer feedback has been received or invented. The exactly 250-word refinement report must be completed **after** genuine feedback is received and the resulting changes are made. `docs/REFINEMENT_NOTES.txt` records what evidence to collect. Your own review of the other student's module is also still required.
+The other independent student can review this ZIP without GitHub access. `docs/PEER_REVIEW.md` supplies the walkthrough and feedback form. Course discussion feedback is documented; a formal independent source-code review has not yet been received. The exactly 250-word refinement report must be completed **after** genuine feedback is received and the resulting changes are made. `docs/REFINEMENT_NOTES.txt` records what evidence to collect. Your own review of the other student's module is also still required.
 
 ## References and assistance
 
