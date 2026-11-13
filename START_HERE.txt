@@ -1,0 +1,56 @@
+CMSC 495 — IT SHIFT HANDOFF ALPHA
+Jose Rodriguez-Stahr · Solo capstone
+
+This package contains a runnable local Alpha, test suite, setup instructions,
+CI workflow, synthetic evaluation, and a review guide for another independent student.
+
+TO TRY IT
+1. Extract the ZIP completely; do not run files from inside the ZIP viewer.
+2. On Mac, double-click Start_Handoff.command. If it opens as text, open Terminal
+   in this project folder and run: bash Start_Handoff.command
+3. On Windows with Python 3.11+, double-click Start_Handoff.bat.
+4. First setup installs the required packages and prints demo credentials.
+   Username: technician. Save the password printed on that first run.
+5. Open http://127.0.0.1:5055 in your browser. Keep the terminal window open.
+
+If setup fails, see README.md for manual setup and Python version requirements.
+First setup needs internet access; normal application use is local and offline.
+
+FOR YOUR REVIEWER
+Send this ZIP. Ask the other independent student to start with docs/PEER_REVIEW.md
+and review handoff/services.py, with its supporting routes, repository, and tests.
+The feedback form covers readability, security, performance, integration,
+and documentation. Each reviewer creates their own local demo credentials.
+
+CURRENT VERIFICATION
+52 automated tests passed; measured Python coverage was 92%.
+The full note-to-approval workflow was checked in the browser.
+Five suggested sentences captured 80% of marked items in 10 fictional cases;
+three suggestions captured only 53.3%. Always review the original notes.
+The maximum-size TextRank request took about 0.18 seconds locally.
+These are local synthetic results, not a hosted pipeline run or production claims.
+
+STILL NEEDED BEFORE THE UNIT 5 SUBMISSION
+- Use the feature/unit5-alpha branch in the original repository and confirm
+  the Actions jobs pass on its final commit.
+  The final hosted Alpha check results must be verified before submission.
+- Receive the other student's real feedback, implement accepted changes, and
+  verify them. Also perform your own formal review of their module.
+- Write the exactly 250-word refinement report from that evidence.
+  docs/REFINEMENT_NOTES.txt lists what to collect. No feedback is invented here.
+
+ORIGINAL PROJECT CONTINUITY
+The original repository has now been recovered:
+https://github.com/rodriguezstahrjose-creator/it-shift-handoff
+This Alpha preserves its backend Store/demo and all 20 original tests, adds the
+web application and 32 tests, and shares the original cosine TextRank core.
+The original Store schema and the new web schema are separate. No legacy data
+migration is claimed. Use the web launchers for the new interface.
+
+The project and documentation were prepared with Codex assistance from the
+earlier Unit 3 design. The recorded commits identify that assistance accurately.
+
+DISCUSSION FEEDBACK
+Your Unit 1, Unit 2, and Unit 4 replies have been reviewed. Read
+docs/DISCUSSION_FEEDBACK.md for the actual suggestions, changes made,
+items already covered, and intentionally deferred scope.
