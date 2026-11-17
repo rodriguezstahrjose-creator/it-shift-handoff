@@ -23,6 +23,8 @@ jobs:
         run: |
           python -m coverage run --source=handoff -m unittest discover -v
           python -m coverage report --fail-under=85
+      - name: Generation feedback regression
+        run: node tests/test_generation_ui.cjs
       - name: Original integration demonstration
         run: python demo.py
       - name: Security scan (medium and high severity gate)

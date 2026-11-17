@@ -1,0 +1,33 @@
+// Focused tests of the shipped functions with a small DOM/API test double.
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const vm = require('node:vm');
+const source = fs.readFileSync('handoff/static/app.js', 'utf8');
+const generateSource = source.slice(source.indexOf('async function generate(mode)'), source.indexOf("on('login-form'"));
+const noticeSource = source.slice(source.indexOf('function notice('), source.indexOf('async function api('));
+(async () => {
+  const nodes = Object.fromEntries(['generate', 'manual', 'draft-status', 'sentence-count', 'notice'].map(id => [id, {value: '5', scrollIntoView() {this.scrolled = true;}}]));
+  const state = {shift: {id: 's'}, draft: null};
+  let resolve, reject;
+  const context = {state, $: id => nodes[id], allowSwitch: () => !state.generating, api: () => new Promise((a,b) => {resolve=a;reject=b;}), renderDraft: () => {nodes['draft-status'].textContent=state.draft.status.toUpperCase();}, loadHistory: async () => {}};
+  vm.createContext(context);
+  vm.runInContext(noticeSource + generateSource, context);
+  const pending = context.generate('textrank');
+  assert.equal(nodes['draft-status'].textContent, 'GENERATING…');
+  assert.equal(nodes.generate.disabled, true);
+  assert.equal(nodes.manual.disabled, true);
+  resolve({status:'draft'}); await pending;
+  assert.equal(nodes['draft-status'].textContent, 'DRAFT');
+  assert.equal(state.generating, false);
+  const existing = state.draft;
+  const failed = context.generate('textrank'); reject(new Error('Timed out'));
+  await assert.rejects(failed, /Timed out/);
+  assert.equal(state.draft, existing);
+  assert.equal(nodes['draft-status'].textContent, 'DRAFT');
+  assert.equal(nodes.generate.disabled, false);
+  assert.equal(nodes.manual.disabled, false);
+  context.notice('Timed out', true);
+  assert.equal(nodes.notice.scrolled, true);
+  assert.equal(nodes.notice.hidden, false);
+  console.log('PASS: pending status, success, failure recovery, preserved draft, visible error');
+})().catch(error => {console.error(error);process.exitCode=1;});

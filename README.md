@@ -102,3 +102,27 @@ Mihalcea, R., & Tarau, P. (2004). TextRank: Bringing order into text. In *Procee
 Pallets. (n.d.). *Testing Flask applications*. Flask documentation. https://flask.palletsprojects.com/en/stable/testing/
 
 The implementation follows the previously prepared Unit 3 shift handoff design. Development, documentation, synthetic examples, and automated verification were prepared with Codex assistance. The earlier local reconstruction history is not substituted for the original GitHub history. Review and understand the implementation before presenting it as your capstone; record assistance according to your course's actual requirements.
+
+## November 17 self-review refinements
+
+The Windows launcher now checks the runtime package versions on every launch.
+An interrupted first install is repaired on the next launch rather than skipped
+because a virtual environment already exists. A complete installation still starts
+offline. Setup and server-start failures remain visible in the console. Existing
+notes and credentials are not deleted or reset.
+
+Summary generation now displays `GENERATING…` and disables both draft-generation
+buttons while waiting. Success restores the draft display; failure restores the
+previous status and brings the error notice into view.
+
+These changes came from self-review and troubleshooting, not external peer feedback.
+Run the new focused checks from the project folder:
+
+```sh
+python -m unittest tests.test_runtime_setup -v
+node tests/test_generation_ui.cjs
+```
+
+The JavaScript test uses DOM/API doubles, not a real browser. Native Windows batch
+execution still requires a Windows verification pass. See
+`docs/evidence/refinement-tests.txt` for the updated Python regression run.

@@ -12,6 +12,7 @@ function notice(message, error = false) {
   $('notice').textContent = message;
   $('notice').className = error ? 'error' : '';
   $('notice').hidden = false;
+  if (error) $('notice').scrollIntoView({block: 'nearest'});
 }
 async function api(path, method = 'GET', data) {
   const headers = {'X-CSRF-Token': state.csrf};
@@ -186,9 +187,15 @@ async function generate(mode) {
   const data = {mode};
   if (mode === 'textrank') data.max_sentences = Number($('sentence-count').value);
   state.generating = true;
+  $('generate').disabled = $('manual').disabled = true;
+  $('draft-status').textContent = 'GENERATING…';
   let draft;
   try { draft = await api('/shifts/' + state.shift.id + '/summaries', 'POST', data); }
-  finally { state.generating = false; }
+  finally {
+    state.generating = false;
+    $('generate').disabled = $('manual').disabled = false;
+    $('draft-status').textContent = state.draft ? state.draft.status.toUpperCase() : 'NO DRAFT';
+  }
   state.draft = draft; state.dirty = false; renderDraft(); await loadHistory();
   notice(mode === 'textrank' ? 'Draft ready. Review the source notes and assign a category to each item.' : 'Manual draft ready. Add the handoff items you want to include.');
 }
