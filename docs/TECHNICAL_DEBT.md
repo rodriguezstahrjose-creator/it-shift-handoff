@@ -1,6 +1,6 @@
 # Technical debt and Alpha limitations
 
-This register is based on implementation and self-testing, not external peer feedback. The project is a solo local prototype, and these items must not be described as peer-requested changes in the later refinement report.
+The original register below came from implementation and self-testing. The November 17 peer-review follow-up at the end separately records Shalom Olukunle's feedback and the bounded change made in response. The project remains a solo local prototype.
 
 | ID | Concrete shortcut or limitation | Reliability/maintenance impact | Current mitigation | Next improvement and verification |
 | --- | --- | --- | --- | --- |
@@ -29,3 +29,31 @@ These changes are attributable to development/testing. External review findings 
 ## Compatibility-layer debt (TD-08)
 
 The recovered Store supports the original internal API and demo with its original database schema. The new authenticated web services use an enriched schema. Retaining both avoids breaking the original 20 tests and demonstrates continuity, but duplicates workflow logic and increases maintenance cost. The web worker and CLI share the original cosine ranking implementation, and both test suites run together. Do not share database files between these schemas. Next: consolidate persistence behind one adapter, add an explicit schema migration, and keep all existing contract and regression tests passing. No migration or existing-record compatibility is claimed in this Alpha.
+
+
+## November 17 peer-review follow-up
+
+Shalom Olukunle identified summary omissions, SummaryService concurrency, source
+revision checks after ranking, duplicate persistence, and missing automated browser
+coverage. Her email cited the original 52-test evidence; the intervening self-review
+added three tests, and this peer-driven change adds three more (58 total).
+
+Implemented: generation now compares the current shift revision with its source
+snapshot under the same `BEGIN IMMEDIATE` transaction used to save the draft and
+its audit event. A competing note committed during ranking causes a controlled
+409 `SOURCE_CHANGED` instead of a stale draft. The same guard protects manual
+drafts. Ranking still runs outside the write transaction, so note entry is not
+blocked for the duration of ranking. Existing review/approval guards remain.
+
+Three deterministic regression tests use an independent SQLite connection to
+commit a note between snapshot and persistence. They cover TextRank, manual mode,
+and an unrelated shift change. Rejection leaves no draft or audit record, preserves
+the added note, and permits a fresh retry. See `evidence/peer-refinement-tests.txt`.
+This is not a multi-process load test or a complete concurrency solution.
+
+Deferred: priority-aware selection and expanded independently labeled urgent-action
+quality evaluation (TD-01); cross-process admission control (TD-04); automated real
+browser testing (TD-06); persistence consolidation/migration (TD-08). The five-sentence
+80% synthetic capture result is unchanged, not improved by this concurrency fix.
+Human source review remains necessary. No claim is made that this feedback completes
+Jose's separate requirement to review another student's project.

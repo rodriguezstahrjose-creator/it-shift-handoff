@@ -93,7 +93,7 @@ The original `Store` remains an internal compatibility/demo component with its o
 
 Work is prepared on `feature/unit5-alpha` in the existing private repository. The original default branch and earlier PRs are preserved. The Alpha is available in [draft PR #3](https://github.com/rodriguezstahrjose-creator/it-shift-handoff/pull/3). Hosted checks passed on the application commit; verify any later code changes before submission. Do not upload runtime databases, installed environments, or credentials.
 
-The other independent student can review this ZIP without GitHub access. `docs/PEER_REVIEW.md` supplies the walkthrough and feedback form. Course discussion feedback is documented; a formal independent source-code review has not yet been received. The exactly 250-word refinement report must be completed **after** genuine feedback is received and the resulting changes are made. `docs/REFINEMENT_NOTES.txt` records what evidence to collect. Your own review of the other student's module is also still required.
+The other independent student can review this ZIP without GitHub access. `docs/PEER_REVIEW.md` supplies the walkthrough and feedback form. Course discussion feedback is documented; independent feedback from Shalom Olukunle was received on November 17. See the peer-review follow-up below. The exactly 250-word refinement report must be completed **after** genuine feedback is received and the resulting changes are made. `docs/REFINEMENT_NOTES.txt` records what evidence to collect. Your own review of the other student's module is also still required.
 
 ## References and assistance
 
@@ -126,3 +126,19 @@ node tests/test_generation_ui.cjs
 The JavaScript test uses DOM/API doubles, not a real browser. Native Windows batch
 execution still requires a Windows verification pass. See
 `docs/evidence/refinement-tests.txt` for the updated Python regression run.
+
+
+## November 17 peer-review refinement
+
+In response to Shalom Olukunle's recommendation to recheck source revisions after
+ranking, both TextRank and manual generation now reject a source that changed
+before persistence with HTTP 409 `SOURCE_CHANGED`. The revision check, draft insert,
+and audit event share one write transaction; ranking does not hold that transaction.
+Read the updated notes and generate a fresh draft after this error.
+
+The updated suite passes **58 Python tests with 92% coverage**, including three new
+competing-writer regressions. The existing JavaScript regression, original demo,
+syntax checks, runtime preflight, and medium/high security gate also pass locally.
+See `docs/evidence/peer-refinement-tests.txt` and `docs/TECHNICAL_DEBT.md` for evidence
+and deferred recommendations. These local results do not establish hosted CI status
+or a new Windows/browser verification pass. Ranking quality remains unchanged.

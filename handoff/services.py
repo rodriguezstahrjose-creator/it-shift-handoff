@@ -115,6 +115,12 @@ class SummaryService:
                        created_at=now(), algorithm_version=textrank.ALGORITHM_VERSION if chosen else None,
                        approval=None)
         with transaction() as db:
+            # Ranking runs without a database write lock. Recheck under the same
+            # write transaction as the insert so a new note cannot slip between
+            # validation and persistence (manual drafts need this check too).
+            if self.repo.shift(shift_id)['revision'] != summary['source_revision']:
+                raise DomainError('SOURCE_CHANGED',
+                                  'New notes were added while preparing the draft. Generate a fresh draft.', 409)
             db.execute('INSERT INTO summaries VALUES (?,?,?,?)',
                         (summary['id'], shift_id, self.repo.actor['id'], json.dumps(summary)))
             self.repo.event(summary, 'generated', now())

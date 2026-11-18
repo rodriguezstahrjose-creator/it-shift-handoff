@@ -84,6 +84,56 @@ class WorkflowTests(unittest.TestCase):
         self.assertEqual(fresh, result)
         self.assertEqual(self.call('/shifts/' + draft['shift_id'] + '/summaries').json['items'][0], result)
 
+    def _add_note_from_independent_connection(self, shift_id):
+        # A nested app context gives this writer its own SQLite connection.
+        from handoff.services import NoteService
+        with self.app.app_context():
+            return NoteService({'id': self.user, 'team_id': self.team}).add_note(
+                shift_id, 'Urgent: isolate the failing UPS before the next shift.')
+
+    def _assert_generation_rejects_changed_source(self, mode):
+        shift = self.shift()
+        added = []
+
+        def competing_write(source, *args):
+            added.append(self._add_note_from_independent_connection(shift))
+            return [source[i] for i in rank(source, args[0])] if mode == 'textrank' else sentences(source)
+
+        target = 'handoff.services.textrank.' + ('extract' if mode == 'textrank' else 'sentences')
+        with patch(target, side_effect=competing_write):
+            response = self.call('/shifts/' + shift + '/summaries', 'POST', {'mode': mode})
+        self.assertEqual(response.status_code, 409, response.json)
+        self.assertEqual(response.json['error']['code'], 'SOURCE_CHANGED')
+        self.assertEqual(self.call('/shifts/' + shift + '/summaries').json['items'], [])
+        with self.app.app_context():
+            self.assertEqual(get_db().execute('SELECT COUNT(*) FROM review_events').fetchone()[0], 0)
+        # Failure must preserve the concurrent note and release the rank lock.
+        fresh = self.draft(shift, mode)
+        self.assertIn(added[0]['id'], fresh['source_note_ids'])
+        revision = self.call('/shifts/' + shift + '/notes').json['shift_revision']
+        self.assertEqual(fresh['source_revision'], revision)
+        with self.app.app_context():
+            self.assertEqual(get_db().execute('SELECT COUNT(*) FROM review_events').fetchone()[0], 1)
+
+    def test_generation_rechecks_source_after_ranking(self):
+        self._assert_generation_rejects_changed_source('textrank')
+
+    def test_manual_generation_rechecks_source_before_persisting(self):
+        self._assert_generation_rejects_changed_source('manual')
+
+    def test_generation_allows_independent_shift_change(self):
+        shift = self.shift()
+        other = self.shift()
+
+        def competing_write(source, count, timeout):
+            self._add_note_from_independent_connection(other)
+            return [source[i] for i in rank(source, count)]
+
+        with patch('handoff.services.textrank.extract', side_effect=competing_write):
+            draft = self.draft(shift)
+        self.assertEqual(len(draft['source_note_ids']), 1)
+        self.assertEqual(self.approve(self.categorize(draft)).status_code, 201)
+
     def test_approval_requires_categories_and_confirmations(self):
         draft = self.draft()
         self.assertEqual(self.approve(draft).json['error']['code'], 'REVIEW_INCOMPLETE')
