@@ -1,28 +1,32 @@
-UNIT 5 REFINEMENT REPORT — EVIDENCE WORKSHEET
-Status: Pending actual external feedback. Not a submission-ready report.
+UNIT 5 REFINEMENT REPORT - EVIDENCE WORKSHEET
+Status: Independent feedback from Shalom Olukunle received November 17, 2026.
+This worksheet is supporting evidence, not the required 250-word report.
 
-The assignment requires exactly 250 words. Do not claim feedback or changes that
-have not occurred. The current project improvements came from self-testing.
+Feedback addressed summary omissions, generation concurrency, a source-revision
+recheck after ranking, duplicate persistence, and automated browser coverage.
 
-After the other independent student reviews your module, collect:
+Implemented response:
+- Recheck the source revision in the transaction saving the draft and audit event.
+- Reject changed sources with HTTP 409 SOURCE_CHANGED in TextRank and manual mode.
+- Keep ranking outside the write transaction.
+- Add three deterministic competing-writer regressions; the suite has 58 tests.
+See README.md, docs/PEER_REVIEW.md, docs/TECHNICAL_DEBT.md, and
+  docs/evidence/peer-refinement-tests.txt for the implementation and evidence.
+Code refinement commit: e1857eaa410f209cf2a4c29e261cc5054b49abb8.
 
-1. Their name, review date, module/version inspected, and actual comments.
-2. The findings in each relevant area: readability, security, performance,
-   integration, and documentation. Keep the original feedback.
-3. The specific changes you made because of that feedback, including functions,
-   before/after behavior, and commit references.
-4. Two or more concrete technical-debt instances if supported by the evidence:
-   what shortcut exists, how it affects reliability or maintenance, what was
-   fixed now, and what is deferred with an actionable next step.
-5. Tests or manual checks actually performed after each change and their results.
-6. Your separate formal review of the other student's module.
+Deferred work:
+- Independently labeled urgent-action evaluation and priority-aware selection.
+- Cross-process admission control and realistic concurrency measurement.
+- Persistence consolidation with explicit schema migrations.
+- Automated real-browser workflow tests.
+The existing 80% synthetic capture result is unchanged by this fix.
 
-Suggested 250-word allocation (the final prose must total exactly 250 words):
-40 words: project/module and review context.
-90 words: specific findings and resulting changes.
-90 words: concrete debt, impacts, and mitigation/deferred work.
-30 words: verification and next steps.
+Report checks:
+1. Exactly 250 words describing real feedback and changes actually made.
+2. Identify concrete technical debt, reliability impacts, and actionable next steps.
+3. Distinguish earlier Windows/manual checks from the new automated regressions.
+4. Check hosted CI for the exact final commit, not only an earlier application commit.
+5. Retain the original feedback privately; do not substitute this summary for it.
 
-Return with the genuine comments once received. The final report can then be
-written in a natural student voice using this evidence and checked for exactly
-250 words. This worksheet must not be presented as the required report.
+Jose's own formal review of another student's module is a separate requirement.
+No completion or instructor waiver of that requirement is claimed here.
