@@ -7,10 +7,27 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
-      - run: python -m unittest discover -v
-      - run: python demo.py
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - name: Install pinned dependencies
+        run: python -m pip install -r requirements-dev.txt
+      - name: Original and Alpha regression suite
+        run: |
+          python -m coverage run --source=handoff -m unittest discover -v
+          python -m coverage report --fail-under=85
+      - name: Generation feedback regression
+        run: node tests/test_generation_ui.cjs
+      - name: Original integration demonstration
+        run: python demo.py
+      - name: Security scan (medium and high severity gate)
+        run: python -m bandit -r handoff -ll
+      - name: Syntax checks
+        run: python -m compileall -q handoff scripts tests

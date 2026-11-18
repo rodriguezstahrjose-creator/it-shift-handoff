@@ -1,0 +1,17 @@
+Name                     Stmts   Miss  Cover
+--------------------------------------------
+handoff/__init__.py         45      2    96%
+handoff/__main__.py         42     21    50%
+handoff/auth.py             92      1    99%
+handoff/db.py               15      0   100%
+handoff/errors.py            5      0   100%
+handoff/rank_worker.py       8      8     0%
+handoff/ranking.py          50      5    90%
+handoff/repository.py       29      0   100%
+handoff/routes.py           69      0   100%
+handoff/services.py        153      5    97%
+handoff/store.py           137     13    91%
+handoff/textrank.py         19      0   100%
+handoff/validation.py       46      1    98%
+--------------------------------------------
+TOTAL                      710     56    92%

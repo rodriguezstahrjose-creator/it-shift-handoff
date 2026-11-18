@@ -1,0 +1,59 @@
+test_complete_demo_reaches_approval (tests.test_review.DemoIntegrationTests.test_complete_demo_reaches_approval) ... ok
+test_approval_persists_identity_and_time_and_is_immutable (tests.test_review.ReviewTests.test_approval_persists_identity_and_time_and_is_immutable) ... ok
+test_extracted_wording_cannot_be_overwritten (tests.test_review.ReviewTests.test_extracted_wording_cannot_be_overwritten) ... ok
+test_extraction_ids_cannot_transfer_to_a_new_draft (tests.test_review.ReviewTests.test_extraction_ids_cannot_transfer_to_a_new_draft) ... ok
+test_full_manual_fallback_flow (tests.test_review.ReviewTests.test_full_manual_fallback_flow) ... ok
+test_missing_confirmations_categories_and_empty_items_block_approval (tests.test_review.ReviewTests.test_missing_confirmations_categories_and_empty_items_block_approval) ... ok
+test_new_notes_block_approval_and_require_fresh_draft (tests.test_review.ReviewTests.test_new_notes_block_approval_and_require_fresh_draft) ... ok
+test_other_team_cannot_review_or_approve (tests.test_review.ReviewTests.test_other_team_cannot_review_or_approve) ... ok
+test_rewrite_as_technician_addition_preserves_extraction_history (tests.test_review.ReviewTests.test_rewrite_as_technician_addition_preserves_extraction_history) ... ok
+test_same_review_save_does_not_increment_version (tests.test_review.ReviewTests.test_same_review_save_does_not_increment_version) ... ok
+test_source_id_cannot_be_forged (tests.test_review.ReviewTests.test_source_id_cannot_be_forged) ... ok
+test_stale_review_is_rejected (tests.test_review.ReviewTests.test_stale_review_is_rejected) ... ok
+test_technician_cannot_claim_extracted_source_or_reuse_extraction_id (tests.test_review.ReviewTests.test_technician_cannot_claim_extracted_source_or_reuse_extraction_id) ... ok
+test_disconnected_sentences_have_deterministic_ties (tests.test_sources.SourceTests.test_disconnected_sentences_have_deterministic_ties) ... ok
+test_draft_records_snapshot_and_does_not_auto_categorize (tests.test_sources.SourceTests.test_draft_records_snapshot_and_does_not_auto_categorize) ... ok
+test_empty_oversized_and_other_team_inputs_rejected (tests.test_sources.SourceTests.test_empty_oversized_and_other_team_inputs_rejected) ... ok
+test_extract_never_creates_new_wording (tests.test_sources.SourceTests.test_extract_never_creates_new_wording) ... ok
+test_manual_and_automatic_modes_both_enforce_snapshot_limit (tests.test_sources.SourceTests.test_manual_and_automatic_modes_both_enforce_snapshot_limit) ... ok
+test_source_offsets_preserve_unicode_and_whitespace (tests.test_sources.SourceTests.test_source_offsets_preserve_unicode_and_whitespace) ... ok
+test_sqlite_records_survive_reopening (tests.test_sources.SourceTests.test_sqlite_records_survive_reopening) ... ok
+test_disconnected_sentences_have_deterministic_ties (tests.test_workflow.TextRankTests.test_disconnected_sentences_have_deterministic_ties) ... ok
+test_related_sentences_rank_above_isolated_sentence (tests.test_workflow.TextRankTests.test_related_sentences_rank_above_isolated_sentence) ... ok
+test_source_boundaries_and_whitespace (tests.test_workflow.TextRankTests.test_source_boundaries_and_whitespace) ... ok
+test_approval_requires_categories_and_confirmations (tests.test_workflow.WorkflowTests.test_approval_requires_categories_and_confirmations) ... ok
+test_approved_handoff_is_immutable_and_approval_retry_is_idempotent (tests.test_workflow.WorkflowTests.test_approved_handoff_is_immutable_and_approval_retry_is_idempotent) ... ok
+test_busy_ranker_returns_actionable_error (tests.test_workflow.WorkflowTests.test_busy_ranker_returns_actionable_error) ... ok
+test_critical_action_recovery_for_discussion_stress_cases (tests.test_workflow.WorkflowTests.test_critical_action_recovery_for_discussion_stress_cases)
+A global quality score must not replace source access and manual recovery. ... ok
+test_empty_and_oversize_shift_bounds (tests.test_workflow.WorkflowTests.test_empty_and_oversize_shift_bounds) ... ok
+test_empty_manual_draft_cannot_be_approved (tests.test_workflow.WorkflowTests.test_empty_manual_draft_cannot_be_approved) ... ok
+test_end_to_end_extract_review_approve_and_reload (tests.test_workflow.WorkflowTests.test_end_to_end_extract_review_approve_and_reload) ... ok
+test_extraction_references_cannot_transfer_between_drafts (tests.test_workflow.WorkflowTests.test_extraction_references_cannot_transfer_between_drafts)
+Regression for the recovery failure described in the Unit 4 reflection. ... ok
+test_incomplete_and_duplicate_review_items_rejected (tests.test_workflow.WorkflowTests.test_incomplete_and_duplicate_review_items_rejected) ... ok
+test_invalid_payloads_are_consistent_errors (tests.test_workflow.WorkflowTests.test_invalid_payloads_are_consistent_errors) ... ok
+test_login_rotates_session_and_logout_invalidates_it (tests.test_workflow.WorkflowTests.test_login_rotates_session_and_logout_invalidates_it) ... ok
+test_login_throttling (tests.test_workflow.WorkflowTests.test_login_throttling) ... ok
+test_malformed_media_and_oversize_request (tests.test_workflow.WorkflowTests.test_malformed_media_and_oversize_request) ... ok
+test_manual_review_and_technician_addition (tests.test_workflow.WorkflowTests.test_manual_review_and_technician_addition) ... ok
+test_new_notes_make_draft_stale (tests.test_workflow.WorkflowTests.test_new_notes_make_draft_stale) ... ok
+test_note_validation_and_injection_string (tests.test_workflow.WorkflowTests.test_note_validation_and_injection_string) ... ok
+test_other_team_cannot_access_resources (tests.test_workflow.WorkflowTests.test_other_team_cannot_access_resources) ... ok
+test_pagination_does_not_limit_summary_snapshot (tests.test_workflow.WorkflowTests.test_pagination_does_not_limit_summary_snapshot) ... ok
+test_requires_authentication_and_csrf (tests.test_workflow.WorkflowTests.test_requires_authentication_and_csrf) ... ok
+test_rewrite_preserves_original_extraction_in_audit (tests.test_workflow.WorkflowTests.test_rewrite_preserves_original_extraction_in_audit) ... ok
+test_seed_does_not_overwrite_existing_data (tests.test_workflow.WorkflowTests.test_seed_does_not_overwrite_existing_data) ... ok
+test_sentence_bounds_and_long_sentence_manual_fallback (tests.test_workflow.WorkflowTests.test_sentence_bounds_and_long_sentence_manual_fallback) ... ok
+test_session_expiry (tests.test_workflow.WorkflowTests.test_session_expiry) ... ok
+test_source_text_is_preserved_as_plain_text (tests.test_workflow.WorkflowTests.test_source_text_is_preserved_as_plain_text) ... ok
+test_stale_review_version_and_noop_save (tests.test_workflow.WorkflowTests.test_stale_review_version_and_noop_save) ... ok
+test_storage_failure_rolls_back_note_and_revision (tests.test_workflow.WorkflowTests.test_storage_failure_rolls_back_note_and_revision) ... ok
+test_tampering_with_extraction_is_rejected (tests.test_workflow.WorkflowTests.test_tampering_with_extraction_is_rejected) ... ok
+test_timeout_and_failure_leave_notes_and_manual_drafting_available (tests.test_workflow.WorkflowTests.test_timeout_and_failure_leave_notes_and_manual_drafting_available) ... ok
+test_unicode_offsets_are_exact (tests.test_workflow.WorkflowTests.test_unicode_offsets_are_exact) ... ok
+
+----------------------------------------------------------------------
+Ran 52 tests in 6.818s
+
+OK

@@ -1,72 +1,144 @@
-# IT shift handoff prototype
+# IT Shift Handoff — CMSC 495 Alpha
 
-Initial backend component for Jose's CMSC 495 project. Uses fictional data only.
-Python 3.11+; no third-party dependencies. This increment establishes the core
-workflow before Flask routes, authentication, and a browser interface are added.
+Solo capstone for Jose Rodriguez-Stahr. This extends the existing [public repository](https://github.com/rodriguezstahrjose-creator/it-shift-handoff), recovered at commit `ad1d2809412d83cf32a4dbbdf374c1c82baa6449`. It implements the shift handoff project from Units 1–3 using Python, Flask, SQLite, HTML/CSS/JavaScript, and local extractive TextRank.
 
-## Scope
+The application keeps original shift notes, suggests source-linked sentences, lets a technician organize and supplement a draft, and requires explicit review before approval. It uses fictional training information only. No paid API, model download, live Navy records, ticket-system import, chatbot, or automatic distribution is involved.
 
-Local TextRank extracts source sentences. A technician supplies categories and
-additional details, then explicitly approves the handoff. It does not import
-operational records or distribute handoffs. It is not ready for operational use.
+## Run the project
 
-## Run
+Use Python **3.11 or newer**. First setup needs internet access to install the pinned packages. Later use is local and offline.
 
-From this directory, with Python 3.11 or newer:
+**Mac:** double-click `Start_Handoff.command`. If macOS opens it as text, open Terminal in this folder and run `bash Start_Handoff.command`.
 
-```text
-python -m unittest discover -v
-python demo.py
+**Windows:** install Python 3.11+ from python.org, then run `Start_Handoff.bat`. Windows launch instructions are provided; the Windows launcher has not been tested on Windows in this session.
+
+The launcher creates an isolated `.venv`, initializes fictional demo notes, and prints a unique local demo password. Username: **technician**. Save the password from that first run. Open **http://127.0.0.1:5055** and keep the terminal open. Stop with Control-C. Reopening preserves notes and the existing password; it does not reset the account.
+
+Manual setup (macOS/Linux):
+
+```sh
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements.txt
+.venv/bin/python -m handoff init
+.venv/bin/python -m handoff run
 ```
 
-The demo uses an in-memory SQLite database and fictional printer notes. It shows
-source extraction, rejection of altered extraction text, rejection of approval
-after new notes arrive, fresh extraction, review, and explicit approval.
+On Windows substitute `.venv\Scripts\python.exe` for `.venv/bin/python`. If port 5055 is occupied, use `python -m handoff run --port 5056` with the activated environment. A missing database must be initialized before running. The default database is `instance/handoff.sqlite` and is deliberately excluded from the release and Git history. To create a separate disposable demo without affecting existing records, set `HANDOFF_DATABASE` to a new database file before running `init` and `run`.
+
+## Try the complete workflow
+
+1. Sign in and select the fictional evening shift, or create a new shift.
+2. Read the original notes. Add a fictional note if desired. Saved notes are immutable; corrections are additional notes.
+3. Generate a suggested summary. The interface starts at **5 sentences**; 3, 8, and 10 are also available. The API's omitted `max_sentences` default remains 3, matching the earlier design contract.
+4. Open **View source** to see the exact selected sentence highlighted in the full original note.
+5. Assign every item to unresolved issues, completed troubleshooting, or pending actions. Use **Rewrite as technician** or **Add technician item** to supply missing context. Technician wording does not claim an extracted source.
+6. Save the review. Confirm source checking and completeness, then approve.
+7. The approved handoff becomes immutable. Reload it from **Saved drafts & handoffs**. Adding notes requires generating a new draft before a new approval.
+
+An approved handoff records who approved it, when, its version, and the source revision. This solo prototype permits self-approval; it does not claim independent second-person authorization. If ranking fails or times out, original notes remain available and **Start a manual draft** is still usable.
 
 ## What is implemented
 
-- SQLite shifts, immutable note entry, draft snapshots, and approval records.
-- Local TextRank using cosine sentence similarity and damped graph ranking.
-- Exact source offsets and original extraction history.
-- Separate technician additions and categorization.
-- Version checks, stale-source rejection, confirmation requirements, immutable
-  approvals, and idempotent retries for the same approval request.
-- A manual draft path; fictional cross-team boundary checks.
-- Automated source, review, persistence, and integration tests.
-- A GitHub Actions workflow prepared for a future hosted repository.
+- Opaque server-side sessions, password hashing, sign-in throttling, inactivity expiry, and CSRF protection.
+- Team-scoped shifts, immutable notes, revision tracking, and paginated retrieval.
+- Local weighted sentence-graph TextRank in a separate process with a four-second timeout.
+- Full source snapshots and exact Unicode code-point offsets; no silent dropping of notes.
+- Technician additions, retained extraction history, version checks, atomic approval, and immutable approved records.
+- Saved-draft/history selection, consistent errors, accessible labels, responsive layout, and plain-text rendering.
+- Automated integration/security/failure-path tests and a GitHub Actions verification workflow.
 
-## Boundaries of this increment
+## Verify it
 
-This is a backend component, not the complete Flask application. Authentication,
-HTTP routes, browser forms, CSRF controls, deployment, security scanning, and
-enforced branch protection are not implemented. Team and technician identifiers
-are trusted caller inputs in this local component; production must derive them
-from authenticated sessions. SQL uses parameters, but this is not a security
-audit. The full Unit 3 API contract is not yet implemented.
+```sh
+python -m pip install -r requirements-dev.txt
+python -m coverage run --source=handoff -m unittest discover -v
+python -m coverage report --fail-under=85
+python -m bandit -r handoff -ll
+python -m compileall -q handoff scripts tests
+python scripts/evaluate.py --output docs/evaluation-results.json
+```
 
-The demo and automated checks do not establish the 80% information-capture target
-or five-second performance target on a representative held-out dataset. The
-ranking loop has bounded iterations and input limits, but the planned hard
-four-second child-process timeout is not implemented.
+Use the virtual environment's Python. `requirements-dev.lock` records all installed runtime and development package versions for this build. `requirements.txt` pins the runtime dependencies. The CI workflow is in `.github/workflows/tests.yml` and uses Python 3.11 and 3.12 on Linux. **Hosted checks passed** on application commit `8e51ff04258681a540055108b8e432d68814e6b9`: both Python 3.11 and 3.12 jobs succeeded for push and pull-request events. [Verified pull-request run](https://github.com/rodriguezstahrjose-creator/it-shift-handoff/actions/runs/43500581067). Local test evidence is included under `docs/evidence/`.
 
-## Branch and review workflow
+The final local verification passed 52 tests with 92% Python coverage. Coverage excludes execution inside the separate worker process, although integration tests invoke the real worker. Static scanning reported two low-severity subprocess warnings, analyzed in `docs/TECHNICAL_DEBT.md`; no medium/high findings were reported.
 
-Use short-lived feature branches, inspect the diff against the Unit 3 contracts,
-run the tests and demo, then merge into main. Local merge commits preserve the
-two completed increments. Both increments were subsequently published and merged
-through GitHub pull requests:
+## Summary quality and limits
 
-- [Source-linked summaries, PR #1](https://github.com/rodriguezstahrjose-creator/it-shift-handoff/pull/1)
-- [Technician review and quality checks, PR #2](https://github.com/rodriguezstahrjose-creator/it-shift-handoff/pull/2)
+Twenty fictional scenarios are included: ten development cases and ten evaluation cases, with important sentence indices marked before running the evaluation. Both 3- and 5-sentence settings were measured without changing the ranking algorithm. On the ten evaluation cases, three sentences captured **16/30 (53.3%)** required items and five captured **24/30 (80.0%)**. Five was the preselected UI setting when the recovered cosine algorithm was reevaluated. The earlier reconstruction used a different similarity function; those earlier numbers are superseded by the included cosine results. These are small synthetic validation results, not independent operational validation or a guarantee that every handoff is complete. Future tuning needs fresh evaluation cases.
 
-PR #2 passed both push and pull-request checks before merging. The hosted test
-log records 20 passing tests; the demo step also succeeded. Branch protection
-is not configured, so checks run automatically but are not an enforced merge rule.
+Three TextRank API requests at the exact 10,000-character, 200-sentence input boundary each took approximately **0.18 seconds** locally, including storage and worker startup, excluding browser/network latency. These measurements do not establish production throughput. See `docs/evaluation-results.json` for raw timings, environment metadata, selected sentences, and omissions.
 
-AI-generated code and tests require human understanding and review. Expected
-results must come from the design requirements, rather than accepting whatever
-the implementation produces. Review source provenance, failure cases, input
-limits, and dependencies before merging. No actual Navy records belong here.
+Individual notes are limited to 5,000 characters; summary input to 10,000 total characters and 200 sentences. A draft has at most 30 items. Sentence splitting is heuristic, and TextRank ranks related wording rather than incident severity. Always read the original notes. The Alpha is a loopback-only development prototype; production deployment and 10,000 simultaneous users are outside scope.
 
-The initial implementation and automated checks were created with Codex. There
-was no independent human code review or teammate approval.
+## Project map
+
+| Module | Responsibility |
+| --- | --- |
+| `handoff/auth.py` | Sign-in, server sessions, CSRF, expiry, throttling |
+| `handoff/db.py`, `repository.py` | Schema, scoped queries, audit persistence |
+| `handoff/services.py` | Note, summary, review, version, and approval rules |
+| `handoff/textrank.py`, `rank_worker.py` | Source offsets, lexical graph, ranking, timeout |
+| `handoff/routes.py`, `validation.py` | HTTP endpoints, strict input contracts |
+| `handoff/static/`, `templates/` | Technician interface |
+| `tests/test_workflow.py` | End-to-end API behavior and failure cases |
+| `scripts/evaluate.py`, `data/scenarios.json` | Reproducible quality/performance evaluation |
+
+See `docs/ARCHITECTURE.md`, `docs/API.md`, and `docs/PEER_REVIEW.md` for module review and testing guidance.
+
+## GitHub and assignment status
+
+This is an **Alpha branch of the original project**, not a completed Unit 5 submission. The original `handoff/store.py`, `demo.py`, original 20 tests, integration notes, and repository history are preserved. The browser worker uses the original cosine TextRank core, factored into a reusable function; sentence splitting now also recognizes newlines. The new authenticated web services extend the design with author metadata, paging, audit events, and a four-second worker timeout.
+
+The original `Store` remains an internal compatibility/demo component with its original schema. The web application uses a separate enriched database schema; do not point `Store` at a web database. No legacy data migration is claimed. This transitional duplication is recorded in the technical-debt register.
+
+Work is prepared on `feature/unit5-alpha` in the existing public repository. The original default branch and earlier PRs are preserved. The Alpha is available in [draft PR #3](https://github.com/rodriguezstahrjose-creator/it-shift-handoff/pull/3). Hosted checks passed on the application commit; verify any later code changes before submission. Do not upload runtime databases, installed environments, or credentials.
+
+The other independent student can review this ZIP without GitHub access. `docs/PEER_REVIEW.md` supplies the walkthrough and feedback form. Course discussion feedback is documented; independent feedback from Shalom Olukunle was received on November 17. See the peer-review follow-up below. The exactly 250-word refinement report must be completed **after** genuine feedback is received and the resulting changes are made. `docs/REFINEMENT_NOTES.txt` records what evidence to collect. Your own review of the other student's module is also still required.
+
+## References and assistance
+
+Mihalcea, R., & Tarau, P. (2004). TextRank: Bringing order into text. In *Proceedings of the 2004 Conference on Empirical Methods in Natural Language Processing* (pp. 404–411). Association for Computational Linguistics. https://aclanthology.org/W04-3252/
+
+Pallets. (n.d.). *Testing Flask applications*. Flask documentation. https://flask.palletsprojects.com/en/stable/testing/
+
+The implementation follows the previously prepared Unit 3 shift handoff design. Development, documentation, synthetic examples, and automated verification were prepared with Codex assistance. The earlier local reconstruction history is not substituted for the original GitHub history. Review and understand the implementation before presenting it as your capstone; record assistance according to your course's actual requirements.
+
+## November 17 self-review refinements
+
+The Windows launcher now checks the runtime package versions on every launch.
+An interrupted first install is repaired on the next launch rather than skipped
+because a virtual environment already exists. A complete installation still starts
+offline. Setup and server-start failures remain visible in the console. Existing
+notes and credentials are not deleted or reset.
+
+Summary generation now displays `GENERATING…` and disables both draft-generation
+buttons while waiting. Success restores the draft display; failure restores the
+previous status and brings the error notice into view.
+
+These changes came from self-review and troubleshooting, not external peer feedback.
+Run the new focused checks from the project folder:
+
+```sh
+python -m unittest tests.test_runtime_setup -v
+node tests/test_generation_ui.cjs
+```
+
+The JavaScript test uses DOM/API doubles, not a real browser. Native Windows batch
+execution still requires a Windows verification pass. See
+`docs/evidence/refinement-tests.txt` for the updated Python regression run.
+
+
+## November 17 peer-review refinement
+
+In response to Shalom Olukunle's recommendation to recheck source revisions after
+ranking, both TextRank and manual generation now reject a source that changed
+before persistence with HTTP 409 `SOURCE_CHANGED`. The revision check, draft insert,
+and audit event share one write transaction; ranking does not hold that transaction.
+Read the updated notes and generate a fresh draft after this error.
+
+The updated suite passes **58 Python tests with 92% coverage**, including three new
+competing-writer regressions. The existing JavaScript regression, original demo,
+syntax checks, runtime preflight, and medium/high security gate also pass locally.
+See `docs/evidence/peer-refinement-tests.txt` and `docs/TECHNICAL_DEBT.md` for evidence
+and deferred recommendations. These local results do not establish hosted CI status
+or a new Windows/browser verification pass. Ranking quality remains unchanged.

@@ -1,0 +1,113 @@
+Peer-feedback refinement verification — November 17, 2026
+Base commit: d2588dc0d8e737cfbd6a4b17371e3441611b7535
+Environment: Linux cloud checkout; Python 3.12.14; pinned requirements-dev.txt installed.
+Scope: atomic source-revision check before summary persistence, not ranking tuning.
+
+Red/green: before the implementation change, the new TextRank and manual source-change
+regressions each failed because generation returned 201 instead of expected 409.
+The unrelated-shift regression passed before and after the change.
+Competing writes use a separate SQLite connection with deterministic scheduling,
+not sleeps or a throughput benchmark. Retry runs the real ranking worker.
+
+COMMAND: python -m coverage run --source=handoff -m unittest discover -v
+test_complete_demo_reaches_approval (tests.test_review.DemoIntegrationTests.test_complete_demo_reaches_approval) ... ok
+test_approval_persists_identity_and_time_and_is_immutable (tests.test_review.ReviewTests.test_approval_persists_identity_and_time_and_is_immutable) ... ok
+test_extracted_wording_cannot_be_overwritten (tests.test_review.ReviewTests.test_extracted_wording_cannot_be_overwritten) ... ok
+test_extraction_ids_cannot_transfer_to_a_new_draft (tests.test_review.ReviewTests.test_extraction_ids_cannot_transfer_to_a_new_draft) ... ok
+test_full_manual_fallback_flow (tests.test_review.ReviewTests.test_full_manual_fallback_flow) ... ok
+test_missing_confirmations_categories_and_empty_items_block_approval (tests.test_review.ReviewTests.test_missing_confirmations_categories_and_empty_items_block_approval) ... ok
+test_new_notes_block_approval_and_require_fresh_draft (tests.test_review.ReviewTests.test_new_notes_block_approval_and_require_fresh_draft) ... ok
+test_other_team_cannot_review_or_approve (tests.test_review.ReviewTests.test_other_team_cannot_review_or_approve) ... ok
+test_rewrite_as_technician_addition_preserves_extraction_history (tests.test_review.ReviewTests.test_rewrite_as_technician_addition_preserves_extraction_history) ... ok
+test_same_review_save_does_not_increment_version (tests.test_review.ReviewTests.test_same_review_save_does_not_increment_version) ... ok
+test_source_id_cannot_be_forged (tests.test_review.ReviewTests.test_source_id_cannot_be_forged) ... ok
+test_stale_review_is_rejected (tests.test_review.ReviewTests.test_stale_review_is_rejected) ... ok
+test_technician_cannot_claim_extracted_source_or_reuse_extraction_id (tests.test_review.ReviewTests.test_technician_cannot_claim_extracted_source_or_reuse_extraction_id) ... ok
+test_matching_install_needs_no_network_repair (tests.test_runtime_setup.RuntimeSetupTests.test_matching_install_needs_no_network_repair) ... ok
+test_missing_package_requires_repair (tests.test_runtime_setup.RuntimeSetupTests.test_missing_package_requires_repair) ... ok
+test_wrong_version_requires_repair (tests.test_runtime_setup.RuntimeSetupTests.test_wrong_version_requires_repair) ... ok
+test_disconnected_sentences_have_deterministic_ties (tests.test_sources.SourceTests.test_disconnected_sentences_have_deterministic_ties) ... ok
+test_draft_records_snapshot_and_does_not_auto_categorize (tests.test_sources.SourceTests.test_draft_records_snapshot_and_does_not_auto_categorize) ... ok
+test_empty_oversized_and_other_team_inputs_rejected (tests.test_sources.SourceTests.test_empty_oversized_and_other_team_inputs_rejected) ... ok
+test_extract_never_creates_new_wording (tests.test_sources.SourceTests.test_extract_never_creates_new_wording) ... ok
+test_manual_and_automatic_modes_both_enforce_snapshot_limit (tests.test_sources.SourceTests.test_manual_and_automatic_modes_both_enforce_snapshot_limit) ... ok
+test_source_offsets_preserve_unicode_and_whitespace (tests.test_sources.SourceTests.test_source_offsets_preserve_unicode_and_whitespace) ... ok
+test_sqlite_records_survive_reopening (tests.test_sources.SourceTests.test_sqlite_records_survive_reopening) ... ok
+test_disconnected_sentences_have_deterministic_ties (tests.test_workflow.TextRankTests.test_disconnected_sentences_have_deterministic_ties) ... ok
+test_related_sentences_rank_above_isolated_sentence (tests.test_workflow.TextRankTests.test_related_sentences_rank_above_isolated_sentence) ... ok
+test_source_boundaries_and_whitespace (tests.test_workflow.TextRankTests.test_source_boundaries_and_whitespace) ... ok
+test_approval_requires_categories_and_confirmations (tests.test_workflow.WorkflowTests.test_approval_requires_categories_and_confirmations) ... ok
+test_approved_handoff_is_immutable_and_approval_retry_is_idempotent (tests.test_workflow.WorkflowTests.test_approved_handoff_is_immutable_and_approval_retry_is_idempotent) ... ok
+test_busy_ranker_returns_actionable_error (tests.test_workflow.WorkflowTests.test_busy_ranker_returns_actionable_error) ... ok
+test_critical_action_recovery_for_discussion_stress_cases (tests.test_workflow.WorkflowTests.test_critical_action_recovery_for_discussion_stress_cases)
+A global quality score must not replace source access and manual recovery. ... ok
+test_empty_and_oversize_shift_bounds (tests.test_workflow.WorkflowTests.test_empty_and_oversize_shift_bounds) ... ok
+test_empty_manual_draft_cannot_be_approved (tests.test_workflow.WorkflowTests.test_empty_manual_draft_cannot_be_approved) ... ok
+test_end_to_end_extract_review_approve_and_reload (tests.test_workflow.WorkflowTests.test_end_to_end_extract_review_approve_and_reload) ... ok
+test_extraction_references_cannot_transfer_between_drafts (tests.test_workflow.WorkflowTests.test_extraction_references_cannot_transfer_between_drafts)
+Regression for the recovery failure described in the Unit 4 reflection. ... ok
+test_generation_allows_independent_shift_change (tests.test_workflow.WorkflowTests.test_generation_allows_independent_shift_change) ... ok
+test_generation_rechecks_source_after_ranking (tests.test_workflow.WorkflowTests.test_generation_rechecks_source_after_ranking) ... ok
+test_incomplete_and_duplicate_review_items_rejected (tests.test_workflow.WorkflowTests.test_incomplete_and_duplicate_review_items_rejected) ... ok
+test_invalid_payloads_are_consistent_errors (tests.test_workflow.WorkflowTests.test_invalid_payloads_are_consistent_errors) ... ok
+test_login_rotates_session_and_logout_invalidates_it (tests.test_workflow.WorkflowTests.test_login_rotates_session_and_logout_invalidates_it) ... ok
+test_login_throttling (tests.test_workflow.WorkflowTests.test_login_throttling) ... ok
+test_malformed_media_and_oversize_request (tests.test_workflow.WorkflowTests.test_malformed_media_and_oversize_request) ... ok
+test_manual_generation_rechecks_source_before_persisting (tests.test_workflow.WorkflowTests.test_manual_generation_rechecks_source_before_persisting) ... ok
+test_manual_review_and_technician_addition (tests.test_workflow.WorkflowTests.test_manual_review_and_technician_addition) ... ok
+test_new_notes_make_draft_stale (tests.test_workflow.WorkflowTests.test_new_notes_make_draft_stale) ... ok
+test_note_validation_and_injection_string (tests.test_workflow.WorkflowTests.test_note_validation_and_injection_string) ... ok
+test_other_team_cannot_access_resources (tests.test_workflow.WorkflowTests.test_other_team_cannot_access_resources) ... ok
+test_pagination_does_not_limit_summary_snapshot (tests.test_workflow.WorkflowTests.test_pagination_does_not_limit_summary_snapshot) ... ok
+test_requires_authentication_and_csrf (tests.test_workflow.WorkflowTests.test_requires_authentication_and_csrf) ... ok
+test_rewrite_preserves_original_extraction_in_audit (tests.test_workflow.WorkflowTests.test_rewrite_preserves_original_extraction_in_audit) ... ok
+test_seed_does_not_overwrite_existing_data (tests.test_workflow.WorkflowTests.test_seed_does_not_overwrite_existing_data) ... ok
+test_sentence_bounds_and_long_sentence_manual_fallback (tests.test_workflow.WorkflowTests.test_sentence_bounds_and_long_sentence_manual_fallback) ... ok
+test_session_expiry (tests.test_workflow.WorkflowTests.test_session_expiry) ... ok
+test_source_text_is_preserved_as_plain_text (tests.test_workflow.WorkflowTests.test_source_text_is_preserved_as_plain_text) ... ok
+test_stale_review_version_and_noop_save (tests.test_workflow.WorkflowTests.test_stale_review_version_and_noop_save) ... ok
+test_storage_failure_rolls_back_note_and_revision (tests.test_workflow.WorkflowTests.test_storage_failure_rolls_back_note_and_revision) ... ok
+test_tampering_with_extraction_is_rejected (tests.test_workflow.WorkflowTests.test_tampering_with_extraction_is_rejected) ... ok
+test_timeout_and_failure_leave_notes_and_manual_drafting_available (tests.test_workflow.WorkflowTests.test_timeout_and_failure_leave_notes_and_manual_drafting_available) ... ok
+test_unicode_offsets_are_exact (tests.test_workflow.WorkflowTests.test_unicode_offsets_are_exact) ... ok
+
+----------------------------------------------------------------------
+Ran 58 tests in 9.750s
+
+OK
+
+COMMAND: python -m coverage report --fail-under=85
+Name                     Stmts   Miss  Cover
+--------------------------------------------
+handoff/__init__.py         45      2    96%
+handoff/__main__.py         42     21    50%
+handoff/auth.py             92      1    99%
+handoff/db.py               15      0   100%
+handoff/errors.py            5      0   100%
+handoff/rank_worker.py       8      8     0%
+handoff/ranking.py          50      5    90%
+handoff/repository.py       29      0   100%
+handoff/routes.py           69      0   100%
+handoff/services.py        155      5    97%
+handoff/store.py           137     13    91%
+handoff/textrank.py         19      0   100%
+handoff/validation.py       46      1    98%
+--------------------------------------------
+TOTAL                      712     56    92%
+
+COMMAND: node tests/test_generation_ui.cjs
+PASS: pending status, success, failure recovery, preserved draft, visible error
+COMMAND: python demo.py
+Exit 0 (original integration demo passed).
+COMMAND: python -m bandit -r handoff -ll
+Exit 0; 0 medium/high findings; 2 existing low-severity subprocess findings.
+COMMAND: python -m compileall -q handoff scripts tests
+Exit 0.
+COMMAND: python scripts/check_runtime.py
+Exit 0.
+COMMAND: git diff --check
+Exit 0.
+
+Limits: no new native Windows launcher or real browser pass in this verification.
+No priority-aware ranking change; the existing 80% synthetic result is unchanged.
+Hosted CI must be checked separately for the final published commit.

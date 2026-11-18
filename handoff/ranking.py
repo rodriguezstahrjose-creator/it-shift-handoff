@@ -9,7 +9,7 @@ from uuid import uuid4
 def sentences(notes):
     result = []
     for note in notes:
-        for match in re.finditer(r"[^.!?]+(?:[.!?]+|$)", note["text"]):
+        for match in re.finditer(r"[^\n]+?(?:[.!?](?=\s|$)|(?=\n|$))", note["text"]):
             raw = match.group()
             start = match.start() + len(raw) - len(raw.lstrip())
             end = match.end() - len(raw) + len(raw.rstrip())
@@ -28,6 +28,16 @@ def extract(notes, max_sentences=3):
     source = sentences(notes)
     if len(source) > 200:
         raise ValueError("INPUT_LIMIT_EXCEEDED")
+    if not source:
+        return []
+    selected = rank_sentences(source, max_sentences)
+    if any(len(source[i]["text"]) > 2000 for i in selected):
+        raise ValueError("SENTENCE_TOO_LONG")
+    return [source[i] for i in selected]
+
+
+def rank_sentences(source, max_sentences=3):
+    """Original cosine TextRank ranking, shared by the CLI and bounded web worker."""
     if not source:
         return []
     # Weighted sentence graph: cosine similarity of lowercase word counts.
@@ -51,7 +61,4 @@ def extract(notes, max_sentences=3):
         scores = updated
         if delta < 1e-8:
             break
-    selected = sorted(sorted(range(size), key=lambda i: (-scores[i], i))[:max_sentences])
-    if any(len(source[i]["text"]) > 2000 for i in selected):
-        raise ValueError("SENTENCE_TOO_LONG")
-    return [source[i] for i in selected]
+    return sorted(sorted(range(size), key=lambda i: (-scores[i], i))[:max_sentences])

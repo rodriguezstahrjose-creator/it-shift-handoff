@@ -1,4 +1,12 @@
+.venv/
+venv/
+instance/
 __pycache__/
 *.pyc
-*.db
-.venv/
+.coverage*
+htmlcov/
+*.sqlite*
+.DS_Store
+.env
+*.bundle
+docs/local-credentials.txt

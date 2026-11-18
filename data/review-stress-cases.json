@@ -1,0 +1,6 @@
+[
+  {"id":"brief-urgent-action","reason":"Dylan Whitney: short urgent actions can be missed","notes":["Portal layout was updated. Portal menu colors changed. Portal header was refreshed. Portal footer links were rearranged. Check UPS U2 now."],"critical_action":"Check UPS U2 now."},
+  {"id":"abbreviations","reason":"Shalom Olukunle: technical abbreviations and mixed note formats","notes":["VPN down; MFA ok. DNS lookup failed. ETA unknown. Next shift: check GW logs before retry."],"critical_action":"Next shift: check GW logs before retry."},
+  {"id":"incomplete-troubleshooting","reason":"Shalom Olukunle: incomplete troubleshooting information","notes":["Printer test started. Result not recorded. Driver version unknown. Do not assume printer is fixed; verify a test page next shift."],"critical_action":"Do not assume printer is fixed; verify a test page next shift."},
+  {"id":"urgent-action-in-second-note","reason":"Aggregate quality can hide an omission in one note","notes":["Portal cosmetic update completed. Portal title changed. Portal menu moved.","Backup retry failed. Check backup error B9 immediately."],"critical_action":"Check backup error B9 immediately."}
+]

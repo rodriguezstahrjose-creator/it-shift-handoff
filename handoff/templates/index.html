@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shift Handoff</title><link rel="stylesheet" href="/static/style.css"><script src="/static/app.js" defer></script></head>
+<body>
+<a class="skip" href="#main">Skip to workspace</a>
+<header><a class="brand" href="/" aria-label="Shift Handoff home"><span class="brand-mark">SH</span><span>Shift Handoff<small>Clear notes. Better continuity.</small></span></a>
+<div class="header-right"><span class="pill">ALPHA · FICTIONAL DATA</span><span id="account"></span><button id="signout" class="quiet" hidden>Sign out</button></div></header>
+<main id="main">
+<div id="notice" role="status" aria-live="polite" hidden></div>
+<section id="login" class="login-card" hidden>
+<span class="eyebrow">YOUR SHIFT STARTS HERE</span><h1>Pick up where<br>the last shift left off.</h1>
+<p>Keep original notes, prepare a suggested summary, and review the details before approving a handoff.</p>
+<form id="login-form"><label for="username">Username</label><input id="username" autocomplete="username" required maxlength="64">
+<label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required maxlength="128">
+<button class="primary" type="submit">Sign in to workspace <span aria-hidden="true">→</span></button></form>
+<p class="hint">Local prototype · Use the demo account created during setup. Enter fictional information only.</p></section>
+<div id="workspace" hidden>
+<section class="page-heading"><div><span class="eyebrow">TECHNICIAN WORKSPACE</span><h1>A clear handoff starts here.</h1><p>Capture what happened. Check what matters. Leave the next shift ready.</p></div><span class="local-note">Fictional training workspace</span></section>
+<div class="workspace-grid">
+<aside class="panel shifts"><div class="panel-title"><h2>Shifts</h2><span id="shift-count" class="count">0</span></div><p class="hint">Select a shift to view its notes.</p><nav id="shift-list" aria-label="Shifts"></nav><button id="more-shifts" class="quiet" hidden>Load more shifts</button>
+<form id="shift-form"><label for="shift-label">Start a new shift</label><input id="shift-label" placeholder="e.g. Friday · Evening" required maxlength="80"><button type="submit" class="secondary">Create shift</button></form></aside>
+<section class="panel notes-panel"><div class="panel-title"><h2 id="notes-title">Original notes</h2><span id="note-count" class="count">0</span></div><p id="shift-description" class="hint">Choose a shift to begin.</p>
+<div id="note-list" class="note-list"><p class="empty">Your shift notes will appear here.</p></div><button id="more-notes" class="quiet" hidden>Load more notes</button>
+<form id="note-form" hidden><label for="note-text">Add an original note</label><textarea id="note-text" rows="4" maxlength="5000" placeholder="What happened, what was tried, and what needs attention?" required></textarea><div class="form-footer"><span class="hint">Saved notes stay unchanged. Add a new note to correct one.</span><button class="primary" type="submit">Save note</button></div></form></section>
+<section class="panel review-panel"><div class="panel-title"><h2>Handoff review</h2><span id="draft-status" class="pill">NO DRAFT</span></div><p class="hint">Suggestions are a starting point. Check the original notes for missing information.</p>
+<div id="draft-tools" hidden><div class="generate-controls"><label for="sentence-count">Suggested sentences</label><select id="sentence-count"><option>3</option><option selected>5</option><option>8</option><option>10</option></select><button id="generate" class="primary">Generate summary</button></div><button id="manual" class="quiet">Start a manual draft</button>
+<label for="draft-history">Saved drafts &amp; handoffs</label><select id="draft-history"><option value="">Choose a saved draft</option></select></div>
+<div id="draft-empty" class="empty review-empty"><span class="empty-symbol" aria-hidden="true">≋</span><h3>From notes to next steps.</h3><p>Select a shift, then generate a suggested summary or start a manual draft.</p></div>
+<div id="draft-editor" hidden><div id="draft-meta" class="hint"></div><div id="review-items"></div><button id="add-item" class="secondary">+ Add technician item</button><div class="save-row"><span id="save-state" class="hint">All changes saved</span><button id="save-review" class="secondary">Save review</button></div>
+<fieldset id="confirmations"><legend>Before you approve</legend><label class="check"><input id="source-confirmed" type="checkbox"> I checked the original source notes.</label><label class="check"><input id="complete-confirmed" type="checkbox"> I checked for missing details and next steps.</label></fieldset>
+<button id="approve" class="primary full" disabled>Approve handoff</button><p id="approval-details" class="approval-details" hidden></p></div></section>
+</div></div>
+</main><footer>CMSC 495 · Solo capstone Alpha <span>AI-assisted drafting · Technician-controlled approval</span></footer>
+<dialog id="source-dialog"><div class="panel-title"><h2 id="source-title">Original source note</h2><button id="close-source" class="quiet" aria-label="Close original source note">Close ×</button></div><p class="hint">The highlighted text is the exact sentence selected from this note.</p><div id="source-content" class="source-content"></div></dialog>
+</body></html>

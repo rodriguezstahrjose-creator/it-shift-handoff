@@ -1,0 +1,32 @@
+UNIT 5 REFINEMENT REPORT - EVIDENCE WORKSHEET
+Status: Independent feedback from Shalom Olukunle received November 17, 2026.
+This worksheet is supporting evidence, not the required 250-word report.
+
+Feedback addressed summary omissions, generation concurrency, a source-revision
+recheck after ranking, duplicate persistence, and automated browser coverage.
+
+Implemented response:
+- Recheck the source revision in the transaction saving the draft and audit event.
+- Reject changed sources with HTTP 409 SOURCE_CHANGED in TextRank and manual mode.
+- Keep ranking outside the write transaction.
+- Add three deterministic competing-writer regressions; the suite has 58 tests.
+See README.md, docs/PEER_REVIEW.md, docs/TECHNICAL_DEBT.md, and
+  docs/evidence/peer-refinement-tests.txt for the implementation and evidence.
+Code refinement commit: e1857eaa410f209cf2a4c29e261cc5054b49abb8.
+
+Deferred work:
+- Independently labeled urgent-action evaluation and priority-aware selection.
+- Cross-process admission control and realistic concurrency measurement.
+- Persistence consolidation with explicit schema migrations.
+- Automated real-browser workflow tests.
+The existing 80% synthetic capture result is unchanged by this fix.
+
+Report checks:
+1. Exactly 250 words describing real feedback and changes actually made.
+2. Identify concrete technical debt, reliability impacts, and actionable next steps.
+3. Distinguish earlier Windows/manual checks from the new automated regressions.
+4. Check hosted CI for the exact final commit, not only an earlier application commit.
+5. Retain the original feedback privately; do not substitute this summary for it.
+
+Jose's own formal review of another student's module is a separate requirement.
+No completion or instructor waiver of that requirement is claimed here.
