@@ -1,6 +1,6 @@
 # Independent-student review package
 
-This is Jose's solo IT Shift Handoff Alpha. The core application is ready for another independent student to inspect and try. **Feedback has not yet been received.** Please record what you actually observe rather than checking every area as passed by default.
+This is Jose's solo IT Shift Handoff Alpha. The core application is ready for another independent student to inspect and try. **Independent feedback from Shalom Olukunle was received on November 17, 2026.** See the response log below and the README peer-review follow-up. Please record what you actually observe rather than checking every area as passed by default.
 
 ## Start here
 
@@ -49,10 +49,10 @@ For each finding, record:
 
 Please include strengths and limitations even if you find no blocking issue. Do not equate a passing test with independent proof that every case is covered.
 
-## Jose's response log — complete after feedback arrives
+## Jose's response log
 
 | Finding | Accepted/deferred and reason | Specific change | Verification | Commit |
 | --- | --- | --- | --- | --- |
-| Pending external feedback | | | | |
+| Recheck source revisions after ranking | Accepted: prevent saving a draft from notes changed during generation | Atomic revision check, draft persistence, and audit event for TextRank and manual generation | Three competing-writer regressions; 58 Python tests pass; see `docs/evidence/peer-refinement-tests.txt` | `e1857eaa410f209cf2a4c29e261cc5054b49abb8` |
 
 The 250-word report comes after these observations and changes. This review pack is not a substitute for the student's own formal review of the other independent student's module. Use the same five-area form when you perform that separate review, recording their actual code and your findings.

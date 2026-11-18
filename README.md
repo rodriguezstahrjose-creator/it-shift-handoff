@@ -1,6 +1,6 @@
 # IT Shift Handoff — CMSC 495 Alpha
 
-Solo capstone for Jose Rodriguez-Stahr. This extends the existing [private repository](https://github.com/rodriguezstahrjose-creator/it-shift-handoff), recovered at commit `ad1d2809412d83cf32a4dbbdf374c1c82baa6449`. It implements the shift handoff project from Units 1–3 using Python, Flask, SQLite, HTML/CSS/JavaScript, and local extractive TextRank.
+Solo capstone for Jose Rodriguez-Stahr. This extends the existing [public repository](https://github.com/rodriguezstahrjose-creator/it-shift-handoff), recovered at commit `ad1d2809412d83cf32a4dbbdf374c1c82baa6449`. It implements the shift handoff project from Units 1–3 using Python, Flask, SQLite, HTML/CSS/JavaScript, and local extractive TextRank.
 
 The application keeps original shift notes, suggests source-linked sentences, lets a technician organize and supplement a draft, and requires explicit review before approval. It uses fictional training information only. No paid API, model download, live Navy records, ticket-system import, chatbot, or automatic distribution is involved.
 
@@ -91,7 +91,7 @@ This is an **Alpha branch of the original project**, not a completed Unit 5 subm
 
 The original `Store` remains an internal compatibility/demo component with its original schema. The web application uses a separate enriched database schema; do not point `Store` at a web database. No legacy data migration is claimed. This transitional duplication is recorded in the technical-debt register.
 
-Work is prepared on `feature/unit5-alpha` in the existing private repository. The original default branch and earlier PRs are preserved. The Alpha is available in [draft PR #3](https://github.com/rodriguezstahrjose-creator/it-shift-handoff/pull/3). Hosted checks passed on the application commit; verify any later code changes before submission. Do not upload runtime databases, installed environments, or credentials.
+Work is prepared on `feature/unit5-alpha` in the existing public repository. The original default branch and earlier PRs are preserved. The Alpha is available in [draft PR #3](https://github.com/rodriguezstahrjose-creator/it-shift-handoff/pull/3). Hosted checks passed on the application commit; verify any later code changes before submission. Do not upload runtime databases, installed environments, or credentials.
 
 The other independent student can review this ZIP without GitHub access. `docs/PEER_REVIEW.md` supplies the walkthrough and feedback form. Course discussion feedback is documented; independent feedback from Shalom Olukunle was received on November 17. See the peer-review follow-up below. The exactly 250-word refinement report must be completed **after** genuine feedback is received and the resulting changes are made. `docs/REFINEMENT_NOTES.txt` records what evidence to collect. Your own review of the other student's module is also still required.
 
